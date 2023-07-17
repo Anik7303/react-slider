@@ -1,6 +1,8 @@
 import { useReducer } from "react";
 import styled from "styled-components";
 import data from "../data";
+import Dot from "./Dot";
+import Dots from "./Dots";
 import Slide from "./Slide";
 import SliderButton from "./SliderButton";
 
@@ -25,9 +27,14 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-interface Action {
+interface SlideTraverseAction {
   type: "next-slide" | "previous-slide";
 }
+interface SlideSetAction {
+  type: "set-slide";
+  payload: number;
+}
+type Action = SlideSetAction | SlideTraverseAction;
 const reducer =
   (limit: number) =>
   (state = 1, action: Action) => {
@@ -36,6 +43,10 @@ const reducer =
         return state < limit ? state + 1 : 1;
       case "previous-slide":
         return state > 1 ? state - 1 : limit;
+      case "set-slide":
+        return action.payload > 0 && action.payload <= limit
+          ? action.payload
+          : state;
       default:
         return state;
     }
@@ -46,6 +57,8 @@ function Slider() {
 
   const prevSlide = () => dispatch({ type: "previous-slide" });
   const nextSlide = () => dispatch({ type: "next-slide" });
+  const setSlide = (index: number) =>
+    dispatch({ type: "set-slide", payload: index });
 
   return (
     <Container>
@@ -56,6 +69,15 @@ function Slider() {
       ))}
       <SliderButton action={nextSlide} direction="next" />
       <SliderButton action={prevSlide} direction="prev" />
+      <Dots>
+        {data.map((item, idx) => (
+          <Dot
+            key={item.id}
+            $active={slideIndex === idx + 1}
+            onClick={() => setSlide(idx + 1)}
+          />
+        ))}
+      </Dots>
     </Container>
   );
 }
