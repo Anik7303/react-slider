@@ -35,9 +35,9 @@ function Slider() {
 
   return (
     <Container>
-      {data.map((obj, idx) => (
-        <Slide key={obj.id} $active={slideIndex === idx + 1}>
-          <Image src={`/image${idx + 1}.jpg`} />
+      {data.map((item, idx) => (
+        <Slide key={item.id} $active={slideIndex === idx + 1}>
+          <Image src={item.image} alt={item.description} />
         </Slide>
       ))}
       <SliderButton action={nextSlide} direction="next" />
