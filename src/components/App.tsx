@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
+import Slider from "./Slider";
 
 const Main = styled.main`
   width: 100%;
@@ -12,7 +13,7 @@ function App() {
   return (
     <Main>
       <GlobalStyles />
-      <h1>React Slider by Ustariz Enzo</h1>
+      <Slider />
     </Main>
   );
 }
