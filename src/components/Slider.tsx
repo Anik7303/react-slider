@@ -7,14 +7,14 @@ import Slide from "./Slide";
 const Container = styled.section`
   max-width: 700px;
   height: 500px;
-  margin: 100px auto 0;
+  margin: 10vh auto 0;
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 
   @media screen and (max-width: 700px) {
     & {
-      margin: 100px 10px 0;
+      margin: 5vh 10px 0;
     }
   }
 `;
