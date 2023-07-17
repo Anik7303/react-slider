@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import data from "../data";
 import SliderButton from "./SliderButton";
+import Slide from "./Slide";
 
 const Container = styled.section`
   max-width: 700px;
@@ -16,17 +17,6 @@ const Container = styled.section`
       margin: 100px 10px 0;
     }
   }
-`;
-
-interface SlideProps {
-  $active: boolean;
-}
-const Slide = styled.div<SlideProps>`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  opacity: ${(props) => (props.$active ? 1 : 0)};
-  transition: opacity ease-in-out 0.4s;
 `;
 
 const Image = styled.img`
