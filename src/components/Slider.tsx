@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import styled from "styled-components";
 import data from "../data";
-import SliderButton from "./SliderButton";
 import Slide from "./Slide";
+import SliderButton from "./SliderButton";
 
 const Container = styled.section`
   max-width: 700px;
@@ -25,13 +25,27 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-function Slider() {
-  const [slideIndex, setSlideIndex] = useState(1);
+interface Action {
+  type: "next-slide" | "previous-slide";
+}
+const reducer =
+  (limit: number) =>
+  (state = 1, action: Action) => {
+    switch (action.type) {
+      case "next-slide":
+        return state < limit ? state + 1 : 1;
+      case "previous-slide":
+        return state > 1 ? state - 1 : limit;
+      default:
+        return state;
+    }
+  };
 
-  const prevSlide = () =>
-    slideIndex > 1 ? setSlideIndex((s) => s - 1) : setSlideIndex(data.length);
-  const nextSlide = () =>
-    slideIndex < data.length ? setSlideIndex((s) => s + 1) : setSlideIndex(1);
+function Slider() {
+  const [slideIndex, dispatch] = useReducer(reducer(data.length), 1);
+
+  const prevSlide = () => dispatch({ type: "previous-slide" });
+  const nextSlide = () => dispatch({ type: "next-slide" });
 
   return (
     <Container>
